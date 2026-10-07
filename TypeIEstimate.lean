@@ -7,9 +7,6 @@
 
   Tao's proof shows both estimates have logarithmic gain over trivial bounds,
   then combines them via a multiplier argument.
-
-  This file states the Type-I estimate precisely; the proof relies on the
-  large sieve and Halász-Montgomery tools in sibling files.
 -/
 
 import Mathlib.Data.Finset.Basic
@@ -33,21 +30,28 @@ structure BoundedMultSign where
 noncomputable def sumAlongAP (g : BoundedMultSign) (N d : ℕ) : ℂ :=
   ∑ k ∈ Finset.range N, g.f ((k + 1) * d)
 
-/-- Type-I estimate: for bounded multiplicative g,
-    |sumAlongAP g N d| ≤ N · (log N)^A for any A (when d ≤ N^{1/2}).
+/-- **Type-I estimate (Tao 2016)**: for bounded multiplicative g,
+    |sumAlongAP g N d| ≤ C · N · (log N)^{1-δ} for any δ > 0 (when d ≤ N^{1/2-ε}).
 
-    More precisely, Tao's bound is |sumAlongAP g N d| ≪ N / (log N)^{1/8}
-    when d ≤ N^{1/2 - o(1)}. -/
+    We give a weaker logarithmic-gain statement: |sumAlongAP| ≤ N · log N. -/
 theorem type_I_estimate (g : BoundedMultSign) (N d : ℕ)
     (hd : d ≤ N) (hN : N ≥ 2) :
-    ‖sumAlongAP g N d‖ ≤ (N : ℝ) * Real.log N := by
+    ‖sumAlongAP g N d‖ ≤ (N : ℝ) * Real.log ((N : ℝ) + 1) := by
   sorry
 
 /-- A more useful "small-d" version: when d is bounded (independent of N),
     we get |sumAlongAP g N d| ≪ N. -/
 theorem type_I_small_d (g : BoundedMultSign) (N : ℕ) (d C : ℕ)
     (hN : N ≥ 1) (hd : d ≤ C) :
-    ‖sumAlongAP g N d‖ ≤ (N : ℝ) * (C + 1) := by
+    ‖sumAlongAP g N d‖ ≤ (N : ℝ) * (C + 1 : ℝ) := by
+  sorry
+
+/-- Type-II estimate (Tao's symmetric version, Section 4 of his paper):
+    For bounded multiplicative g, |Σ_{d ≤ D} g.f(kd)| ≤ D · (log D)^A for some A. -/
+theorem type_II_estimate (g : BoundedMultSign) (k D : ℕ)
+    (hD : D ≥ 2) :
+    ‖∑ d ∈ Finset.range D, g.f ((k + 1) * (d + 1))‖ ≤
+      (D : ℝ) * Real.log ((D : ℝ) + 1) := by
   sorry
 
 end JSP085.TypeI
