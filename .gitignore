@@ -1,0 +1,8 @@
+/.lake/
+/build/
+/target/
+*.olean
+*.ilean
+*.c
+.DS_Store
+Thumbs.db
